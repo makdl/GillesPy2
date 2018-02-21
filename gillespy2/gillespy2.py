@@ -465,6 +465,9 @@ class Species:
     def __str__(self):
         return self.name
 
+    def set_population(self, new_number):
+        self.initial_value = new_number
+
 
 class Parameter:
     """ 
