@@ -751,7 +751,7 @@ class StochMLDocument():
         You SHOULD do
         
         print model.serialize()            
-            
+
         """
 
         # Description
