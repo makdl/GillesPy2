@@ -40,9 +40,9 @@ def convert(filename, model_name=None, gillespy_model=None):
 
         if species.getId() == 'EmptySet':
             errors.append([
-                              "EmptySet species detected in model on line {0}. EmptySet is not an explicit species in "
-                              "gillespy2".format(
-                                  species.getLine()), 0])
+                "EmptySet species detected in model on line {0}. EmptySet is not an explicit species in "
+                "gillespy2".format(
+                    species.getLine()), 0])
             continue
 
         name = species.getId()
@@ -67,22 +67,22 @@ def convert(filename, model_name=None, gillespy_model=None):
                 msg += "rule"
 
                 errors.append([
-                                  "Species '{0}' does not have any initial conditions. Associated {1} '{2}' found, "
-                                  "but {1}s are not supported in gillespy. Assuming initial condition 0".format(
-                                      species.getId(), msg, rule.getId()), 0])
+                    "Species '{0}' does not have any initial conditions. Associated {1} '{2}' found, "
+                    "but {1}s are not supported in gillespy. Assuming initial condition 0".format(
+                        species.getId(), msg, rule.getId()), 0])
             else:
                 errors.append([
-                                  "Species '{0}' does not have any initial conditions or rules. Assuming initial "
-                                  "condition 0".format(
-                                      species.getId()), 0])
+                    "Species '{0}' does not have any initial conditions or rules. Assuming initial "
+                    "condition 0".format(
+                        species.getId()), 0])
 
             value = 0
 
         if value < 0.0:
             errors.append([
-                              "Species '{0}' has negative initial condition ({1}). gillespy does not support negative "
-                              "initial conditions. Assuming initial condition 0".format(
-                                  species.getId(), value), -5])
+                "Species '{0}' has negative initial condition ({1}). gillespy does not support negative "
+                "initial conditions. Assuming initial condition 0".format(
+                    species.getId(), value), -5])
             value = 0
 
         gillespy_species = Species(name=name, initial_value=value)
@@ -129,9 +129,9 @@ def convert(filename, model_name=None, gillespy_model=None):
 
             if species.getSpecies() == "EmptySet":
                 errors.append([
-                                  "EmptySet species detected as reactant in reaction '{0}' on line {1}. EmptySet is "
-                                  "not an explicit species in gillespy".format(
-                                      reaction.getId(), species.getLine()), 0])
+                    "EmptySet species detected as reactant in reaction '{0}' on line {1}. EmptySet is "
+                    "not an explicit species in gillespy".format(
+                        reaction.getId(), species.getLine()), 0])
             else:
                 reactants[species.getSpecies()] = species.getStoichiometry()
 
@@ -141,9 +141,9 @@ def convert(filename, model_name=None, gillespy_model=None):
 
             if species.getSpecies() == "EmptySet":
                 errors.append([
-                                  "EmptySet species detected as product in reaction '{0}' on line {1}. EmptySet is "
-                                  "not an explicit species in gillespy".format(
-                                      reaction.getId(), species.getLine()), 0])
+                    "EmptySet species detected as product in reaction '{0}' on line {1}. EmptySet is "
+                    "not an explicit species in gillespy".format(
+                        reaction.getId(), species.getLine()), 0])
             else:
                 products[species.getSpecies()] = species.getStoichiometry()
 
@@ -186,35 +186,35 @@ def convert(filename, model_name=None, gillespy_model=None):
         compartment = model.getCompartment(i)
 
         errors.append([
-                          "Compartment '{0}' found on line '{1}' with volume '{2}' and dimension '{3}'. gillespy "
-                          "assumes a single well-mixed, reaction volume".format(
-                              compartment.getId(), compartment.getLine(), compartment.getVolume(),
-                              compartment.getSpatialDimensions()), -5])
+            "Compartment '{0}' found on line '{1}' with volume '{2}' and dimension '{3}'. gillespy "
+            "assumes a single well-mixed, reaction volume".format(
+                compartment.getId(), compartment.getLine(), compartment.getVolume(),
+                compartment.getSpatialDimensions()), -5])
 
     for i in range(model.getNumConstraints()):
         constraint = model.getConstraint(i)
 
         errors.append([
-                          "Constraint '{0}' found on line '{1}' with equation '{2}'. gillespy does not support SBML "
-                          "Constraints".format(
-                              constraint.getId(), constraint.getLine(), libsbml.formulaToString(constraint.getMath())),
-                          -5])
+            "Constraint '{0}' found on line '{1}' with equation '{2}'. gillespy does not support SBML "
+            "Constraints".format(
+                constraint.getId(), constraint.getLine(), libsbml.formulaToString(constraint.getMath())),
+            -5])
 
     for i in range(model.getNumEvents()):
         event = model.getEvent(i)
 
         errors.append([
-                          "Event '{0}' found on line '{1}' with trigger equation '{2}'. gillespy does not support "
-                          "SBML Events".format(
-                              event.getId(), event.getLine(), libsbml.formulaToString(event.getTrigger().getMath())),
-                          -5])
+            "Event '{0}' found on line '{1}' with trigger equation '{2}'. gillespy does not support "
+            "SBML Events".format(
+                event.getId(), event.getLine(), libsbml.formulaToString(event.getTrigger().getMath())),
+            -5])
 
     for i in range(model.getNumFunctionDefinitions()):
         function = model.getFunctionDefinition(i)
 
         errors.append([
-                          "Function '{0}' found on line '{1}' with equation '{2}'. gillespy does not support SBML "
-                          "Function Definitions".format(
-                              function.getId(), function.getLine(), libsbml.formulaToString(function.getMath())), -5])
+            "Function '{0}' found on line '{1}' with equation '{2}'. gillespy does not support SBML "
+            "Function Definitions".format(
+                function.getId(), function.getLine(), libsbml.formulaToString(function.getMath())), -5])
 
     return gillespy_model, errors

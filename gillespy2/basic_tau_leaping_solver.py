@@ -1,7 +1,4 @@
-import gillespy2
 from .gillespySolver import GillesPySolver
-import random
-import math
 import numpy as np
 
 class BasicTauSolver(GillesPySolver):

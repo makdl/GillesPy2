@@ -4,6 +4,7 @@ import random
 import math
 
 class BasicSSASolver(GillesPySolver):
+    name = "Basic SSA Solver"
     """ TODO
     """
     

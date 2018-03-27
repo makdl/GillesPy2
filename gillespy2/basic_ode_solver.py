@@ -5,6 +5,7 @@ import numpy as np
 
 
 class BasicODESolver(GillesPySolver):
+    name = "Basic ODE Solver"
 
     @staticmethod
     def rhs(y0, t, species, parameters, reactions):
