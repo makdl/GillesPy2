@@ -5,6 +5,7 @@ class Trichloroethylene(Model):
     """
     UNCA iGEM 2017 Metabolic Channel.
     """
+
     def __init__(self, parameter_values=None):
         # initialize Model
         Model.__init__(self, name="Trichloroethylene")
@@ -189,34 +190,33 @@ class MichaelisMenten(Model):
         self.add_reaction([r1, r2, r3])
         self.timespan(numpy.linspace(0, 100000, 100))
 
-# class ToggleSwitch(Model):
-#     """ Gardner et al. Nature (1999)Construction of a genetic toggle switch in Escherichia coli """
-#     def __init__(self, cooperativity=2.0):
-#     # Initialize the model.
-#         Model.__init__(self, name="toggle_switch")
-#         # Species
-#         U = gillespy.Species(name=’U’, initial_value = 10)
-#         V = gillespy.Species(name=’V’, initial_value = 10)
-#         self.add_species([U, V])
-#         # Parameters
-#         alpha1 = gillespy.Parameter(name=’alpha1’, expression=10.0)
-# alpha2 = gillespy.Parameter(name=’alpha2’, expression=10.0)
-# beta = gillespy.Parameter(name=’beta’, expression=cooperativity)
-# gamma = gillespy.Parameter(name=’gamma’, expression=cooperativity)
-# mu = gillespy.Parameter(name=’mu’, expression=1.0)
-# self.add_parameter([alpha1, alpha2, beta, gamma, mu])
-# # Species
-# U = gillespy.Species(name=’U’, initial_value=10)
-# V = gillespy.Species(name=’V’, initial_value=10)
-# self.add_species([U, V])
-# # Reactions
-# cu = gillespy.Reaction(name="r1",reactants={}, products={U:1},
-# propensity_function="alpha1/(1+pow(V,beta))")
-# cv = gillespy.Reaction(name="r2",reactants={}, products={V:1},
-# propensity_function="alpha2/(1+pow(U,gamma))")
-# du = gillespy.Reaction(name="r3",reactants={U:1}, products={},
-# rate=mu)
-# dv = gillespy.Reaction(name="r4",reactants={V:1}, products={},
-# rate=mu)
-# self.add_reaction([cu,cv,du,dv])
-# self.timespan(np.linspace(0,250,251))
+
+class ToggleSwitch(Model):
+    """
+    Gardner et al. Nature (1999)Construction of a genetic toggle switch in Escherichia coli
+    (Transcription from
+    """
+
+    def __init__(self, cooperativity=2.0):
+        # Initialize the model.
+        Model.__init__(self, name="Toggle_Switch")
+        # Species
+        U = Species(name='U', initial_value=10)
+        V = Species(name='V', initial_value=10)
+        self.add_species([U, V])
+        # Parameters
+        alpha1 = Parameter(name='alpha1', expression=10.0)
+        alpha2 = Parameter(name='alpha2', expression=10.0)
+        beta = Parameter(name='beta', expression=2.0)
+        gamma = Parameter(name='gamma', expression=2.0)
+        mu = Parameter(name='mu', expression=1.0)
+        self.add_parameter([alpha1, alpha2, beta, gamma, mu])
+        # Species
+        self.add_species([U, V])
+        # Reactions
+        cu = Reaction(name="r1", reactants={}, products={U: 1}, rate=alpha1.value*(1+V.initial_value**beta))
+        cv = Reaction(name="r2", reactants={}, products={V: 1}, rate=alpha2.value(1+U.initial_value**gamma))
+        du = Reaction(name="r3", reactants={U: 1}, products={}, rate=mu)
+        dv = Reaction(name="r4", reactants={V: 1}, products={}, rate=mu)
+        self.add_reaction([cu, cv, du, dv])
+        self.timespan(np.linspace(0, 250, 251))
