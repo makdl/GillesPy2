@@ -28,9 +28,9 @@ install:
           - pip3 install cython
           - pip3 install coverage
 script:
-    - "coverage run --source=gillespy2 --omit=gillespy2/solvers/stochkit/* test/run_tests.py -m develop"
+    - if [ "$TRAVIS_OS_NAME" = "linux" && "TRAVIS_DIST = "xenial" ]; then "coverage run --source=gillespy2 --omit=gillespy2/solvers/stochkit/* test/run_tests.py -m develop"l; fi
 after_script:
-    - "coverage xml"
+    - if [ "$TRAVIS_OS_NAME" = "linux" && "TRAVIS_DIST = "xenial" ]; then "coverage xml"; fi
     - "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT; fi"
 deploy:
   # API token stored in env var PYPI_PASSWORD on Travis CI
@@ -42,4 +42,3 @@ deploy:
     repo: GillesPy2/GillesPy2
     branch: master
     tags: true
-    
