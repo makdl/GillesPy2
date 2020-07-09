@@ -1,5 +1,14 @@
-os: linux
+jobs:
+  include:
+    - os: linux
+      dist: xenial
+    - os: linux
+      dist: bionic
+    - os: osx
+    - os: windows
+linux
 dist: xenial
+
 language: python
 python: "3.6"
 before_script:
