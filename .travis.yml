@@ -4,11 +4,15 @@ jobs:
       dist: xenial
       language: python
       python: 3.6
+      before_script:
+        - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
+        - "chmod +x ./cc-test-reporter"
+        - "./cc-test-reporter before-build"
       script:
-        - coverage run --source=gillespy2 --omit=gillespy2/solvers/stochkit/* test/run_tests.py -m develop
+        - "coverage run --source=gillespy2 --omit=gillespy2/solvers/stochkit/* test/run_tests.py -m develop"
       after_script:
-        - coverage xml
-        - if ["$TRAVIS_TEST_RESULT" == 0 ]; then ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT; fi
+        - "coverage xml"
+        - "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT; fi"
     - os: linux
       dist: bionic
       language: python
@@ -22,10 +26,6 @@ jobs:
         - choco install python --version 3.6.0
         - python -m pip install --upgrade pip
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
-before_script:
-    - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
-    - "chmod +x ./cc-test-reporter"
-    - "./cc-test-reporter before-build"
 install:
           - pip3 install --upgrade pip           
           - pip3 install -r requirements.txt
