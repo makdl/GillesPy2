@@ -24,9 +24,7 @@ jobs:
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
         - choco install python --version 3.6.0
-        - choco install mingw
         - choco install make
-        - python -m pip install --upgrade pip
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
 install:
   - pip3 install --upgrade pip           
@@ -47,3 +45,4 @@ deploy:
     repo: GillesPy2/GillesPy2
     branch: master
     tags: true
+
