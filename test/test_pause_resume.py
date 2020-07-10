@@ -59,10 +59,7 @@ class TestPauseResume(unittest.TestCase):
         args = [[shutil.which('python3'), '/pause_model.py', 'NumPySSASolver'], [shutil.which('python3'), '/pause_model.py', 'TauLeapingSolver'],
                 [shutil.which('python3'), '/pause_model.py', 'ODESolver']]
         for arg in args:
-            try:
-                p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE)
-            except: subprocess.CalledProcessError
-                print CalledProcessError.output
+            p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE)
             time.sleep(2)
             os.kill(p.pid, signal.SIGINT)
             out, err = p.communicate()
