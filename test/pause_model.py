@@ -1,5 +1,5 @@
 import sys
-sys.path.append('..')
+sys.path.append('./')
 from gillespy2.core import Model, Species, Reaction, Parameter
 import numpy as np
 from gillespy2 import NumPySSASolver
@@ -52,15 +52,15 @@ class Oregonator(Model):
                              products={B: 1, F: 1},
                              rate=k5)
         self.add_reaction([reaction1, reaction2, reaction3, reaction4, reaction5])
-        if sys.argv[1] != 'ODESolver':
+        if sys.argv[0] != 'ODESolver':
             self.timespan(np.linspace(0, 5, 501))
         else:
             self.timespan(np.linspace(0, 5, 500001))
 
 model = Oregonator()
-if sys.argv[1] == 'NumPySSASolver':
+if sys.argv[0] == 'NumPySSASolver':
     results = model.run(solver=NumPySSASolver)
-elif sys.argv[1] == 'TauLeapingSolver':
+elif sys.argv[0] == 'TauLeapingSolver':
     results = model.run(solver=TauLeapingSolver)
 else:
     results = model.run(solver=ODESolver)
