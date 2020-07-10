@@ -59,7 +59,7 @@ class TestPauseResume(unittest.TestCase):
         args = [['python3', 'pause_model.py', 'NumPySSASolver'], ['python3', 'pause_model.py', 'TauLeapingSolver'],
                 ['python3', 'pause_model.py', 'ODESolver']]
         for arg in args:
-            p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE, shell=True)
+            p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE)
             time.sleep(2)
             os.kill(p.pid, signal.SIGINT)
             out, err = p.communicate()
