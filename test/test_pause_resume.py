@@ -56,8 +56,9 @@ class TestPauseResume(unittest.TestCase):
                                                  t=1)
 
     def test_pause(self):
-        args = [['python3', 'pause_model.py', 'NumPySSASolver'], ['python3', 'pause_model.py', 'TauLeapingSolver'],
-                ['python3', 'pause_model.py', 'ODESolver']]
+        testRoot = os.path.dirname(os.path.abspath(__file__))
+        args = [['python3', testRoot + '/pause_model.py', 'NumPySSASolver'], ['python3', testRoot +  '/pause_model.py', 'TauLeapingSolver'],
+                ['python3', testRoot + '/pause_model.py', 'ODESolver']]
         for arg in args:
             p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE)
             time.sleep(2)
