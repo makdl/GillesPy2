@@ -61,8 +61,8 @@ class TestPauseResume(unittest.TestCase):
         for arg in args:
             try:
                 p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE)
-            except: subprocess.CalledProcessError as e:
-                print e.output
+            except: subprocess.CalledProcessError
+                print CalledProcessError.output
             time.sleep(2)
             os.kill(p.pid, signal.SIGINT)
             out, err = p.communicate()
