@@ -67,6 +67,7 @@ class TestPauseResume(unittest.TestCase):
             # results[0][-1][0] (where .run(show_labels=False), this index being the last time in the index
             # One would get an output of "5.0" before converting it to an int. Hence, assert time != 5.0 rather than 5.
             self.assertFalse(out.decode('utf-8').rstrip() == '5.0')
+            print(out.decode('utf-8').rstrip())
 
         solvers = [VariableSSACSolver, SSACSolver]
         # For the C solvers, timeouts behave identical to a keyboard interrupt, and would return the same data, if
