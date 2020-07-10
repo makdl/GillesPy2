@@ -56,10 +56,10 @@ class TestPauseResume(unittest.TestCase):
                                                  t=1)
 
     def test_pause(self):
-        args = [[shutil.which('python3'), '/pause_model.py', 'NumPySSASolver'], [shutil.which('python3'), '/pause_model.py', 'TauLeapingSolver'],
-                [shutil.which('python3'), '/pause_model.py', 'ODESolver']]
+        args = [['python3', 'pause_model.py', 'NumPySSASolver'], ['python3', 'pause_model.py', 'TauLeapingSolver'],
+                ['python3', 'pause_model.py', 'ODESolver']]
         for arg in args:
-            p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE)
+            p = subprocess.Popen(arg, start_new_session=True, stdout=subprocess.PIPE, shell=True)
             time.sleep(2)
             os.kill(p.pid, signal.SIGINT)
             out, err = p.communicate()
