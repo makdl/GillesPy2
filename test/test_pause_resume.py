@@ -57,6 +57,7 @@ class TestPauseResume(unittest.TestCase):
 
     def test_pause(self):
         testRoot = os.path.dirname(os.path.abspath(__file__))
+        print(testRoot)
         args = [['python3', testRoot + '/pause_model.py', 'NumPySSASolver'], ['python3', testRoot + '/pause_model.py', 'TauLeapingSolver'],
                 ['python3', testRoot + '/pause_model.py', 'ODESolver']]
         for arg in args:
@@ -64,6 +65,7 @@ class TestPauseResume(unittest.TestCase):
             time.sleep(2)
             os.kill(p.pid, signal.SIGINT)
             out, err = p.communicate()
+            print(out)
             # End time for Oregonator is 5. If indexing into a numpy array using the form:
             # results[0][-1][0] (where .run(show_labels=False), this index being the last time in the index
             # One would get an output of "5.0" before converting it to an int. Hence, assert time != 5.0 rather than 5.
