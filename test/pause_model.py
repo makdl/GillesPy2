@@ -52,10 +52,9 @@ class Oregonator(gillespy2.Model):
                                        products={B: 1, F: 1},
                                        rate=k5)
         self.add_reaction([reaction1, reaction2, reaction3, reaction4, reaction5])
-        if sys.argv[1] != 'ODESolver':
-            self.timespan(np.linspace(0, 5, 501))
-        else:
-            self.timespan(np.linspace(0, 5, 500001))
+
+        self.timespan(np.linspace(0, 5, 501))
+
 
 model = Oregonator()
 if sys.argv[1] == 'NumPySSASolver':
@@ -63,6 +62,6 @@ if sys.argv[1] == 'NumPySSASolver':
 elif sys.argv[1] == 'TauLeapingSolver':
     results = model.run(solver=TauLeapingSolver)
 else:
-    results = model.run(solver=ODESolver)
+    results = model.run(solver=ODESolver, t=500001)
 
 print(results.to_array()[0][-1][0])
