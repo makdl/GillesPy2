@@ -52,19 +52,17 @@ class Oregonator(Model):
                              products={B: 1, F: 1},
                              rate=k5)
         self.add_reaction([reaction1, reaction2, reaction3, reaction4, reaction5])
-        if sys.argv[0] != 'ODESolver':
+        if sys.argv[1] != 'ODESolver':
             self.timespan(np.linspace(0, 5, 501))
         else:
             self.timespan(np.linspace(0, 5, 500001))
 
 model = Oregonator()
-if sys.argv[0] == 'NumPySSASolver':
+if sys.argv[1] == 'NumPySSASolver':
     results = model.run(solver=NumPySSASolver)
-elif sys.argv[0] == 'TauLeapingSolver':
+elif sys.argv[1] == 'TauLeapingSolver':
     results = model.run(solver=TauLeapingSolver)
 else:
     results = model.run(solver=ODESolver)
 
 print(results.to_array()[0][-1][0])
-
-
